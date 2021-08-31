@@ -8,12 +8,13 @@ class AbilitiesController extends Controller
 {
     public function index()
     {
+        $roles = auth()->user()->roles()->get()->pluck('title');
         $permissions = auth()->user()->roles()->with('permissions')->get()
             ->pluck('permissions')
             ->flatten()
             ->pluck('title')
             ->toArray();
 
-        return $permissions;
+        return response()->json(['roles' => $roles, 'permissions' => $permissions]);
     }
 }
