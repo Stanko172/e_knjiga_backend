@@ -20,12 +20,14 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             PermissionRoleSeeder::class,
             RoleUserSeeder::class,
+            ShopOfficeSeeder::class,
             Membership_cardSeeder::class,
             GenreSeeder::class,
             BookSeeder::class,
             WriterSeeder::class,
             Book_genreSeeder::class,
             Book_writerSeeder::class,
+            RequestSeeder::class
         ]);
     }
 }

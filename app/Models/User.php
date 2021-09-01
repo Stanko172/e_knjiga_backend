@@ -8,10 +8,20 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Role;
 use App\Models\Membership_card;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+
+    protected static function booted()
+    {
+        static::addGlobalScope('withPassword', function ($builder) {
+            $builder
+                ->join('membership_card', 'users.id', '=', 'membership_card.user_id')
+                ->select(DB::raw('membership_card.password, users.*'));
+        });
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +31,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
+        'created_at',
+        'updated_at'
     ];
 
     /**
@@ -30,7 +41,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
         'remember_token',
     ];
 

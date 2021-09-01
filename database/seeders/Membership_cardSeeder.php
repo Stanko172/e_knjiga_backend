@@ -16,9 +16,31 @@ class Membership_cardSeeder extends Seeder
     public function run()
     {
         DB::table('membership_card')->insert([
-            'user_id' => 1,
-            'ot_password' => '$2y$10$V4b9D/wvUuMH6MKhku./ceFu6KCadn7UzCGCHYcmSgl8H4zGfFjCa',
-            'is_ot_password' => false,
+            [
+                'user_id' => DB::table('users')->where('email', '=', 'admin@email.com')->first()->id,
+                'password' => Hash::make('12345678'),
+                'is_ot_password' => 0,
+            ],
+            [
+                'user_id' => DB::table('users')->where('email', '=', 'stanko@email.com')->first()->id,
+                'password' => Hash::make('12345678'),
+                'is_ot_password' => 0,
+            ],
+            [
+                'user_id' => DB::table('users')->where('email', '=', 'igor@email.com')->first()->id,
+                'password' => Hash::make('12345678'),
+                'is_ot_password' => 0,
+            ],
+            [
+                'user_id' => DB::table('users')->where('email', '=', 'ana@email.com')->first()->id,
+                'password' => Hash::make('12345678'),
+                'is_ot_password' => 1,
+            ],
+            [
+                'user_id' => DB::table('users')->where('email', '=', 'marko@email.com')->first()->id,
+                'password' => Hash::make('12345678'),
+                'is_ot_password' => 1,
+            ]
         ]);
     }
 }
