@@ -14,9 +14,9 @@ class CreateMembershipCardTable extends Migration
     public function up()
     {
         Schema::create('membership_card', function (Blueprint $table) {
-            $table->id();
+            $table->id('card_id');
             $table->foreignId('user_id')->constrained();
-            $table->string('ot_password');
+            $table->string('password');
             $table->boolean('is_ot_password');
             $table->timestamps();
             

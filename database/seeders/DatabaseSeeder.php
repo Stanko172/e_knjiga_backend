@@ -20,7 +20,9 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             PermissionRoleSeeder::class,
             RoleUserSeeder::class,
+            ShopOfficeSeeder::class,
             Membership_cardSeeder::class,
+            RequestSeeder::class
         ]);
     }
 }
