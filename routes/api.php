@@ -27,6 +27,8 @@ Route::post("/register", [RegisterController::class, 'register']);
 Route::post("/login", [LoginController::class, 'login']);
 Route::post("/logout", [LoginController::class, 'logout']);
 
+Route::patch("/otpassword_change", [LoginController::class, 'otpassword_change']);
+
 Route::get("/abilities", [App\Http\Controllers\AbilitiesController::class, 'index']);
 
 //Admin panel API routes

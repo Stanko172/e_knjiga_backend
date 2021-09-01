@@ -11,6 +11,8 @@ class Membership_card extends Model
 
     protected $table = "membership_card";
 
+    protected $primaryKey = 'card_id';
+
     protected $fillable = [
         'user_id',
         'password',
