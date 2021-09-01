@@ -18,7 +18,7 @@ class CreateWritersTable extends Migration
             $table->string('name');
             $table->string('surname');
             $table->date('bday');
-            $table->date('dday');
+            $table->date('dday')->nullable();;
             $table->timestamps();
         });
     }

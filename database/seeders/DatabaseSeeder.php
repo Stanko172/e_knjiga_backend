@@ -21,6 +21,11 @@ class DatabaseSeeder extends Seeder
             PermissionRoleSeeder::class,
             RoleUserSeeder::class,
             Membership_cardSeeder::class,
+            GenreSeeder::class,
+            BookSeeder::class,
+            WriterSeeder::class,
+            Book_genreSeeder::class,
+            Book_writerSeeder::class,
         ]);
     }
 }
