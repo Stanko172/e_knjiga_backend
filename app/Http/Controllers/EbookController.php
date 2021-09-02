@@ -3,17 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Book;
+use App\Models\EBook;
 
-use function GuzzleHttp\Promise\each;
-
-class BookController extends Controller
+class EbookController extends Controller
 {
     public function index(){
-        $books = Book::with(['genres', 'writers'])->get();
-        return $books;
+        $ebooks = EBook::with(['genres', 'writers'])->get();
+        return $ebooks;
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -24,18 +21,16 @@ class BookController extends Controller
         $request->validate([
             'name' => ['required'],
             'description' => ['required'],
-            'amount' => ['required'],
             'price' => ['required']
         ]);
 
-        $book = new Book([
+        $ebook = new Ebook([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
-            'amount' => $request->input('amount'),
             'price' => $request->input('price')
         ]);
-        $book->save();
-        return response()->json(['message' => 'Book created']);
+        $ebook->save();
+        return response()->json(['message' => 'Ebook created']);
     }
 
     /**
@@ -80,10 +75,10 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $books = Book::find($id);
-        $books->update($request->all());
+        $ebook = EBook::find($id);
+        $ebook->update($request->all());
 
-        return response()->json(['message' => "Book updated"]);
+        return response()->json(['message' => "Ebook updated"]);
     }
 
     /**
@@ -95,13 +90,13 @@ class BookController extends Controller
     public function destroy($id)
     {   
         #return Book::where('id', $id)->delete();
-        $book = Book::find($id);
-        $result = $book->delete();
+        $ebook = Ebook::find($id);
+        $result = $ebook->delete();
         if($result){
-            return ['message' => 'Book deleted'];
+            return ['message' => 'Ebook deleted'];
         }
         else{
-            return ['message' => 'The book has not been deleted'];
+            return ['message' => 'The ebook has not been deleted'];
         }
     }
 }

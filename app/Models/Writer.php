@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Book;
+use App\Models\Ebook;
 
 class Writer extends Model
 {
@@ -21,5 +22,9 @@ class Writer extends Model
 
     public function books(){
         return $this->belongsToMany(Book::class, 'book_writers');
+    }
+
+    public function ebooks(){
+        return $this->belongsToMany(EBook::class, 'writer_ebooks');
     }
 }

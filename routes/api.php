@@ -59,6 +59,12 @@ Route::prefix('admin')->group(function(){
     Route::post("/writer/update/{id}", [App\Http\Controllers\WriterContorller::class, 'update']);
     Route::post("/writer/delete/{id}", [App\Http\Controllers\WriterContorller::class, 'destroy']);
     Route::post("/writer/create", [App\Http\Controllers\WriterContorller::class, 'create']);
+
+    //Book
+    Route::get("/ebook/index", [App\Http\Controllers\EbookController::class, 'index']);
+    Route::post("/ebook/update/{id}", [App\Http\Controllers\EbookController::class, 'update']);
+    Route::post("/ebook/delete/{id}", [App\Http\Controllers\EbookController::class, 'destroy']);
+    Route::post("/ebook/create", [App\Http\Controllers\EbookController::class, 'create']);
 });
 
 //User panel API routes
