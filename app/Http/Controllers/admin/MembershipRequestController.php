@@ -48,7 +48,7 @@ class MembershipRequestController extends Controller
         }
 
         //Dohvaćanje informacija o poslovnici
-        $shop_office_name = Shop_office::find($membership_request->shop_office_id)->first()->name;
+        $shop_office_name = Shop_office::find($membership_request->shop_office_id)->name;
 
         //Kreiranje novog korisnika - člana biblioteke
         $user = new User();

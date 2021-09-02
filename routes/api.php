@@ -33,6 +33,11 @@ Route::get("/abilities", [App\Http\Controllers\AbilitiesController::class, 'inde
 
 //Admin panel API routes
 Route::prefix('admin')->group(function(){
+    //Permission
+    Route::get("/permission/index", [App\Http\Controllers\admin\PermissionController::class, 'index']);
+    Route::post("/permission/save", [App\Http\Controllers\admin\PermissionController::class, 'save']);
+    Route::delete("/permission/delete/{id}", [App\Http\Controllers\admin\PermissionController::class, 'delete']);
+
     //User membership card
     Route::post("/user_membership_card/create", [App\Http\Controllers\admin\UserMembershipController::class, 'create']);
     Route::delete("/user_membership_card/delete", [App\Http\Controllers\admin\UserMembershipController::class, 'delete']);
