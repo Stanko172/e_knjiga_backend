@@ -32,7 +32,7 @@ class MembershipRequestInfo extends Mailable
      */
     public function build()
     {
-        switch($this->type === 'type'){
+        switch($this->type){
             case 'success':
                 $view_name = 'emails.membership_request_success';
                 break;

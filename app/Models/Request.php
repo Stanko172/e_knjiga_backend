@@ -17,4 +17,8 @@ class Request extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function shop_office(){
+        return $this->belongsTo(Shop_office::class, 'shop_office_id');
+    }
 }
