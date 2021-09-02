@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Permission_role;
 use App\Models\Role;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {

@@ -44,6 +44,12 @@ Route::prefix('admin')->group(function(){
     Route::post("/role/edit", [App\Http\Controllers\admin\RoleController::class, 'edit']);
     Route::delete("/role/delete/{id}", [App\Http\Controllers\admin\RoleController::class, 'delete']);
 
+    //User
+    Route::get("/user/index", [App\Http\Controllers\admin\UserController::class, 'index']);
+    Route::post("/user/create", [App\Http\Controllers\admin\UserController::class, 'create']);
+    Route::post("/user/edit", [App\Http\Controllers\admin\UserController::class, 'edit']);
+    Route::delete("/user/delete/{id}", [App\Http\Controllers\admin\UserController::class, 'delete']);
+
     //User membership card
     Route::post("/user_membership_card/create", [App\Http\Controllers\admin\UserMembershipController::class, 'create']);
     Route::delete("/user_membership_card/delete", [App\Http\Controllers\admin\UserMembershipController::class, 'delete']);
