@@ -3,17 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Book;
+use App\Models\Genre;
 
-use function GuzzleHttp\Promise\each;
-
-class BookController extends Controller
+class GenreController extends Controller
 {
     public function index(){
-        $books = Book::with(['genres', 'writers'])->get();
-        return $books;
+        $genres = Genre::with('books')->get();
+        return $genres;
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -23,17 +20,13 @@ class BookController extends Controller
     {
         $request->validate([
             'name' => ['required'],
-            'amount' => ['required'],
-            'price' => ['required']
         ]);
 
-        $book = new Book([
+        $genre = new Genre([
             'name' => $request->input('name'),
-            'amount' => $request->input('amount'),
-            'price' => $request->input('price')
         ]);
-        $book->save();
-        return response()->json(['message' => 'Book created']);
+        $genre->save();
+        return response()->json(['message' => 'Genre created']);
     }
 
     /**
@@ -78,10 +71,10 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $books = Book::find($id);
-        $books->update($request->all());
+        $genres = Genre::find($id);
+        $genres->update($request->all());
 
-        return response()->json(['message' => "Book updated"]);
+        return response()->json(['message' => "Genre updated"]);
     }
 
     /**
@@ -93,13 +86,13 @@ class BookController extends Controller
     public function destroy($id)
     {   
         #return Book::where('id', $id)->delete();
-        $book = Book::find($id);
-        $result = $book->delete();
+        $genre = Genre::find($id);
+        $result = $genre->delete();
         if($result){
-            return ['message' => 'Book deleted'];
+            return ['message' => 'Genre deleted'];
         }
         else{
-            return ['message' => 'The book has not been deleted'];
+            return ['message' => 'The Genre has not been deleted'];
         }
     }
 }

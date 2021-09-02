@@ -41,6 +41,24 @@ Route::prefix('admin')->group(function(){
     Route::get("/membership_request/index", [App\Http\Controllers\admin\MembershipRequestController::class, 'index']);
     Route::post("/membership_request/store", [App\Http\Controllers\admin\MembershipRequestController::class, 'store']);
     Route::post("/membership_request/delete", [App\Http\Controllers\admin\MembershipRequestController::class, 'delete']);
+
+    //Book
+    Route::get("/book/index", [App\Http\Controllers\BookController::class, 'index']);
+    Route::post("/book/update/{id}", [App\Http\Controllers\BookController::class, 'update']);
+    Route::post("/book/delete/{id}", [App\Http\Controllers\BookController::class, 'destroy']);
+    Route::post("/book/create", [App\Http\Controllers\BookController::class, 'create']);
+
+    //Genre
+    Route::get("/genre/index", [App\Http\Controllers\GenreController::class, "index"]);
+    Route::post("/genre/update/{id}", [App\Http\Controllers\GenreController::class, 'update']);
+    Route::post("/genre/delete/{id}", [App\Http\Controllers\GenreController::class, 'destroy']);
+    Route::post("/genre/create", [App\Http\Controllers\GenreController::class, 'create']);
+
+    //Writer
+    Route::get("/writer/index", [App\Http\Controllers\WriterContorller::class, "index"]);
+    Route::post("/writer/update/{id}", [App\Http\Controllers\WriterContorller::class, 'update']);
+    Route::post("/writer/delete/{id}", [App\Http\Controllers\WriterContorller::class, 'destroy']);
+    Route::post("/writer/create", [App\Http\Controllers\WriterContorller::class, 'create']);
 });
 
 //User panel API routes
