@@ -38,6 +38,12 @@ Route::prefix('admin')->group(function(){
     Route::post("/permission/save", [App\Http\Controllers\admin\PermissionController::class, 'save']);
     Route::delete("/permission/delete/{id}", [App\Http\Controllers\admin\PermissionController::class, 'delete']);
 
+    //Role
+    Route::get("/role/index", [App\Http\Controllers\admin\RoleController::class, 'index']);
+    Route::post("/role/create", [App\Http\Controllers\admin\RoleController::class, 'create']);
+    Route::post("/role/edit", [App\Http\Controllers\admin\RoleController::class, 'edit']);
+    Route::delete("/role/delete/{id}", [App\Http\Controllers\admin\RoleController::class, 'delete']);
+
     //User membership card
     Route::post("/user_membership_card/create", [App\Http\Controllers\admin\UserMembershipController::class, 'create']);
     Route::delete("/user_membership_card/delete", [App\Http\Controllers\admin\UserMembershipController::class, 'delete']);
