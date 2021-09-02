@@ -1,19 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
-use App\Mail\MembershipRequestInfo;
+use App\Http\Controllers\Controller;
 use App\Models\Membership_card;
-use App\Models\Request as ModelsRequest;
-use App\Models\Shop_office;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 
 class UserMembershipController extends Controller
 {
-
     public function create(Request $request){
         $request->validate([
             'name' => 'required|string',
