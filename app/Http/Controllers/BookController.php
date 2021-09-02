@@ -23,6 +23,7 @@ class BookController extends Controller
     {
         $request->validate([
             'name' => ['required'],
+            'description' => ['required'],
             'amount' => ['required'],
             'price' => ['required']
         ]);

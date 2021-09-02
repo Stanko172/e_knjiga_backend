@@ -27,7 +27,10 @@ class DatabaseSeeder extends Seeder
             WriterSeeder::class,
             Book_genreSeeder::class,
             Book_writerSeeder::class,
-            RequestSeeder::class
+            RequestSeeder::class,
+            EbookSeeder::class,
+            Ebook_writerSeeder::class,
+            Ebook_genreSeeder::class,
         ]);
     }
 }
