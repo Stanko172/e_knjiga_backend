@@ -32,15 +32,20 @@ class Membership_cardSeeder extends Seeder
                 'is_ot_password' => 0,
             ],
             [
-                'user_id' => DB::table('users')->where('email', '=', 'ana@email.com')->first()->id,
+                'user_id' => DB::table('users')->where('email', '=', 'mihael@email.com')->first()->id,
                 'password' => Hash::make('12345678'),
                 'is_ot_password' => 1,
             ],
             [
-                'user_id' => DB::table('users')->where('email', '=', 'marko@email.com')->first()->id,
+                'user_id' => DB::table('users')->where('email', '=', 'ivan@email.com')->first()->id,
                 'password' => Hash::make('12345678'),
                 'is_ot_password' => 1,
-            ]
+            ],
+            [
+                'user_id' => DB::table('users')->where('email', '=', 'tin@email.com')->first()->id,
+                'password' => Hash::make('12345678'),
+                'is_ot_password' => 1,
+            ],
         ]);
     }
 }

@@ -36,14 +36,20 @@ class UserSeeder extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'name' => 'Ana Anic',
-                'email' => 'ana@email.com',
+                'name' => 'Mihael Vasilj',
+                'email' => 'mihael@email.com',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'name' => 'Marko Markovic',
-                'email' => 'marko@email.com',
+                'name' => 'Ivan Miskovic',
+                'email' => 'ivan@email.com',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
+                'name' => 'Tin Tomic',
+                'email' => 'tin@email.com',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]
