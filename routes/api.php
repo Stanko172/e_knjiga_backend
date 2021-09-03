@@ -87,4 +87,5 @@ Route::prefix('admin')->group(function(){
 //User panel API routes
 Route::prefix('user')->group(function(){
     Route::post("/membership_request/create", [App\Http\Controllers\MembershipRequestController::class, 'create']);
+    Route::get("/shop_office/index", [App\Http\Controllers\ShopOfficeController::class, 'index']);
 });
