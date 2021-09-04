@@ -31,6 +31,9 @@ Route::patch("/otpassword_change", [LoginController::class, 'otpassword_change']
 
 Route::get("/abilities", [App\Http\Controllers\AbilitiesController::class, 'index']);
 
+Route::post("forgot-password", [App\Http\Controllers\NewPasswordController::class, 'forgot']);
+Route::post("reset-password", [App\Http\Controllers\NewPasswordController::class, 'reset']);
+
 //Admin panel API routes
 Route::prefix('admin')->group(function(){
     //Permission
