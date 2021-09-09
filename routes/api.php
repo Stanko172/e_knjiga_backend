@@ -91,4 +91,14 @@ Route::prefix('admin')->group(function(){
 Route::prefix('user')->group(function(){
     Route::post("/membership_request/create", [App\Http\Controllers\MembershipRequestController::class, 'create']);
     Route::get("/shop_office/index", [App\Http\Controllers\ShopOfficeController::class, 'index']);
+
+    //Writer
+    Route::get("/writer/index", [App\Http\Controllers\user\WriterController::class, 'index']);
+
+    //Genre
+    Route::get("/genre/index", [App\Http\Controllers\user\GenreController::class, 'index']);
+
+    //Dashboard
+    Route::post("/dashboard/books", [App\Http\Controllers\user\BookController::class, 'index']);
+    Route::post("/dashboard/ebooks", [App\Http\Controllers\user\EBookController::class, 'index']);
 });

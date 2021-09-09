@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Genre;
 use App\Models\Writer;
+use Illuminate\Support\Facades\DB;
 
 class Book extends Model
 {
@@ -25,4 +26,10 @@ class Book extends Model
     public function writers(){
         return $this->belongsToMany(Writer::class, 'book_writers', 'book_id', 'writer_id');
     }
+
+    public function rentals(){
+        return $this->hasMany(Rental::class);
+    }
+
+    //Dodati i za kupnje knjiga
 }
