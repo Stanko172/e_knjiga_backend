@@ -16,6 +16,7 @@ class CreateEBooksTable extends Migration
         Schema::create('e_books', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->integer('year')->nullable();
             $table->text('description');
             $table->decimal('price', $precision = 8, $scale = 2)->nullable();
             $table->timestamps();

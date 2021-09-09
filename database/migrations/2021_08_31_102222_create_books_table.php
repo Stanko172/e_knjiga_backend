@@ -16,6 +16,7 @@ class CreateBooksTable extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('year')->nullable();
             $table->text('description')->nullable();
             $table->integer('amount');
             $table->decimal('price', $precision = 8, $scale = 2)->nullable();
