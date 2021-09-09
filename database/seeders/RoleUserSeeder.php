@@ -23,6 +23,12 @@ class RoleUserSeeder extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
+                'role_id' => DB::table('roles')->where('title', 'user')->first()->id,
+                'user_id' => DB::table('users')->where('email', 'admin@email.com')->first()->id,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
                 'role_id' => DB::table('roles')->where('title', 'admin')->first()->id,
                 'user_id' => DB::table('users')->where('email', 'stanko@email.com')->first()->id,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
