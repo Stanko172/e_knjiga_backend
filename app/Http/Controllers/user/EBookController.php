@@ -29,6 +29,8 @@ class EBookController extends Controller
                     })
                     //Potrebno dodati tablice u bazi podataka
                     //->withCount('rentals')
+                    ->withCount('ratings')
+                    ->withSum('ratings', 'rating')
                     ->get();
                 /*
                 $books = $books->sortByDesc(function($book){
@@ -56,6 +58,8 @@ class EBookController extends Controller
                 })
                 //Potrebno dodati tablice u bazi podataka
                 //->withCount('rentals')
+                ->withCount('ratings')
+                ->withSum('ratings', 'rating')
                 ->orderBy('id', 'desc')
                 ->get();
 

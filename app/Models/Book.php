@@ -32,4 +32,8 @@ class Book extends Model
     }
 
     //Dodati i za kupnje knjiga
+
+    public function ratings(){
+        return $this->hasMany(BookRating::class);
+    }
 }

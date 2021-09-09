@@ -25,21 +25,21 @@ class BookRatingSeeder extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'rating' => 2.0,
+                'rating' => 3.0,
                 'user_id' => 2,
                 'book_id' => 2,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'rating' => 2.0,
+                'rating' => 4.5,
                 'user_id' => 3,
                 'book_id' => 3,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'rating' => 2.0,
+                'rating' => 5.0,
                 'user_id' => 4,
                 'book_id' => 4,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -53,7 +53,7 @@ class BookRatingSeeder extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'rating' => 2.0,
+                'rating' => 1.0,
                 'user_id' => 6,
                 'book_id' => 6,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),

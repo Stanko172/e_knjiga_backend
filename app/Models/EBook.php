@@ -26,4 +26,8 @@ class EBook extends Model
     public function writers(){
         return $this->belongsToMany(Writer::class, 'writer_ebooks', 'e_book_id', 'writer_id');
     }
+
+    public function ratings(){
+        return $this->hasMany(EBookRating::class);
+    }
 }

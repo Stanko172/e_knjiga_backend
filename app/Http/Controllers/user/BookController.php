@@ -28,6 +28,8 @@ class BookController extends Controller
                         return $query->where('genre_id', $genre_id);
                     })
                     ->withCount('rentals')
+                    ->withCount('ratings')
+                    ->withSum('ratings', 'rating')
                     ->get();
                 
                 $books = $books->sortByDesc(function($book){
@@ -50,6 +52,8 @@ class BookController extends Controller
                         return $query->where('genre_id', $genre_id);
                     })
                     ->withCount('rentals')
+                    ->withCount('ratings')
+                    ->withSum('ratings', 'rating')
                     ->orderBy('id', 'desc')
                     ->get();
 
