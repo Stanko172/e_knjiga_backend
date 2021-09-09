@@ -31,6 +31,8 @@ class DatabaseSeeder extends Seeder
             EbookSeeder::class,
             Ebook_writerSeeder::class,
             Ebook_genreSeeder::class,
+            BookRatingSeeder::class,
+            EBookRatingSeeder::class
         ]);
     }
 }
