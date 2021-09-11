@@ -101,4 +101,6 @@ Route::prefix('user')->group(function(){
     //Dashboard
     Route::post("/dashboard/books", [App\Http\Controllers\user\BookController::class, 'index']);
     Route::post("/dashboard/ebooks", [App\Http\Controllers\user\EBookController::class, 'index']);
+
+    Route::post("/purchase", [App\Http\Controllers\UserController::class, 'purchase']);
 });

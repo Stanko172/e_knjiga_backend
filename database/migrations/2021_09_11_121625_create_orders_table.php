@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEbookPurchasesTable extends Migration
+class CreateOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateEbookPurchasesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ebook_purchases', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('e_book_id')->constrained()->onDelete('cascade');
+            $table->string('transaction_id');
+            $table->decimal('total', $precision = 8, $scale = 2)->default(0.0);
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateEbookPurchasesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ebook_purchases');
+        Schema::dropIfExists('orders');
     }
 }
