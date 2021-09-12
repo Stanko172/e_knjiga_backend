@@ -8,7 +8,7 @@ use App\Models\Genre;
 class GenreController extends Controller
 {
     public function index(){
-        $genres = Genre::with(['books', 'ebooks'])->get();
+        $genres = Genre::orderByDesc('id')->get();
         return $genres;
     }
     /**
