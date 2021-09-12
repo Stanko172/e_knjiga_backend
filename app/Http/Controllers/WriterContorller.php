@@ -8,7 +8,7 @@ use App\Models\Writer;
 class WriterContorller extends Controller
 {
     public function index(){
-        $writer = Writer::with('books')->get();
+        $writer = Writer::all();
         return $writer;
     }
     /**

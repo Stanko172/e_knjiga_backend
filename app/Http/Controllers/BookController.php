@@ -10,7 +10,7 @@ use function GuzzleHttp\Promise\each;
 class BookController extends Controller
 {
     public function index(){
-        $books = Book::with(['genres', 'writers'])->get();
+        $books = Book::with(['genres', 'writers'])->orderByDesc('id')->get();
         return $books;
     }
 
@@ -35,7 +35,22 @@ class BookController extends Controller
             'price' => $request->input('price')
         ]);
         $book->save();
-        return response()->json(['message' => 'Book created']);
+
+        //Dodavanje pisaca
+        $writers = array_map(function($writer){
+            return $writer['id'];
+        }, $request->writers);
+
+        $book->writers()->attach($writers);
+
+        //Dodavanje žanrova
+        $genres = array_map(function($genre){
+            return $genre['id'];
+        }, $request->genres);
+
+        $book->genres()->attach($genres);
+
+        return response()->json(['message' => 'Knjiga kreirana']);
     }
 
     /**
@@ -80,10 +95,31 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $books = Book::find($id);
-        $books->update($request->all());
+        $book = Book::find($id);
 
-        return response()->json(['message' => "Book updated"]);
+        $writers = array_map(function($writer){
+            return $writer['id'];
+        }, $request->writers);
+
+        $genres = array_map(function($genre){
+            return $genre['id'];
+        }, $request->genres);
+
+        //Ažuriranje međutablica
+        $book->writers()->sync($writers);
+        $book->genres()->sync($genres);
+
+        //Ažuriranje knjige
+        $book->name = $request->name;
+        $book->amount = $request->amount;
+        $book->price = $request->price;
+        $book->description = $request->description;
+
+        if($book->save){
+            return response()->json(['message' => "Knjiga spremljena!"]);
+        }else{
+            return response()->json(['message' => "Greška prilikom spremnja knjige!"]);
+        }
     }
 
     /**
@@ -98,10 +134,10 @@ class BookController extends Controller
         $book = Book::find($id);
         $result = $book->delete();
         if($result){
-            return ['message' => 'Book deleted'];
+            return ['message' => 'Knjiga izbrisana'];
         }
         else{
-            return ['message' => 'The book has not been deleted'];
+            return ['message' => 'Greška prilikom brisanja knjige!'];
         }
     }
 }
