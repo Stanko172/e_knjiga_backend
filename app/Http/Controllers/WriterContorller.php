@@ -8,7 +8,7 @@ use App\Models\Writer;
 class WriterContorller extends Controller
 {
     public function index(){
-        $writer = Writer::all();
+        $writer = Writer::orderByDesc('id')->get();
         return $writer;
     }
     /**
@@ -21,8 +21,7 @@ class WriterContorller extends Controller
         $request->validate([
             'name' => ['required'],
             'surname' => ['required'],
-            'bday' => ['required|date_format:Y-m-d'],
-            'dday' => ['required|date_format:Y-m-d'],
+            'bday' => ['required'],
         ]);
 
         $writer = new Writer([
@@ -80,7 +79,7 @@ class WriterContorller extends Controller
         $writer = Writer::find($id);
         $writer->update($request->all());
 
-        return response()->json(['message' => "Writer updated"]);
+        return response()->json(['message' => "Pisac ažuriran"]);
     }
 
     /**

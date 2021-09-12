@@ -80,7 +80,7 @@ Route::prefix('admin')->group(function(){
     Route::post("/writer/delete/{id}", [App\Http\Controllers\WriterContorller::class, 'destroy']);
     Route::post("/writer/create", [App\Http\Controllers\WriterContorller::class, 'create']);
 
-    //Book
+    //EBook
     Route::get("/ebook/index", [App\Http\Controllers\EbookController::class, 'index']);
     Route::post("/ebook/update/{id}", [App\Http\Controllers\EbookController::class, 'update']);
     Route::post("/ebook/delete/{id}", [App\Http\Controllers\EbookController::class, 'destroy']);
