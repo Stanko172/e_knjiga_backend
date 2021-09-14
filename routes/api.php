@@ -47,11 +47,13 @@ Route::prefix('admin')->group(function(){
     Route::post("/role/edit", [App\Http\Controllers\admin\RoleController::class, 'edit']);
     Route::delete("/role/delete/{id}", [App\Http\Controllers\admin\RoleController::class, 'delete']);
 
+    
     //User
     Route::get("/user/index", [App\Http\Controllers\admin\UserController::class, 'index']);
     Route::post("/user/create", [App\Http\Controllers\admin\UserController::class, 'create']);
     Route::post("/user/edit", [App\Http\Controllers\admin\UserController::class, 'edit']);
     Route::delete("/user/delete/{id}", [App\Http\Controllers\admin\UserController::class, 'delete']);
+    
 
     //User membership card
     Route::post("/user_membership_card/create", [App\Http\Controllers\admin\UserMembershipController::class, 'create']);
@@ -102,5 +104,7 @@ Route::prefix('user')->group(function(){
     Route::post("/dashboard/books", [App\Http\Controllers\user\BookController::class, 'index']);
     Route::post("/dashboard/ebooks", [App\Http\Controllers\user\EBookController::class, 'index']);
 
-    Route::post("/purchase", [App\Http\Controllers\UserController::class, 'purchase']);
+    Route::post("/purchase/book", [App\Http\Controllers\UserController::class, 'purchase_book']);
+    Route::post("/purchase/membership", [App\Http\Controllers\UserController::class, 'purchase_membership']);
+
 });

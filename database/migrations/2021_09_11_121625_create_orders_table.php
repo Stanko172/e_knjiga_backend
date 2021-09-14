@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('transaction_id');
+            $table->string('payment_type');
             $table->decimal('total', $precision = 8, $scale = 2)->default(0.0);
             $table->timestamps();
         });
