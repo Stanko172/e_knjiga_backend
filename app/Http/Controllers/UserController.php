@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class UserController extends Controller
 {
     public function purchase_book(Request $request){
-        
+        /*
         $user = User::firstOrCreate(
             [
             'email' => $request->input('email')
@@ -21,9 +21,9 @@ class UserController extends Controller
                 'state' => $request->input('state'),
                 'zip_code' => $request->input('zip_code')
             ]
-        );
+        );*/
     
-        //$user = User::where('email', '=', $request->input('email'))->first();
+        $user = User::where('email', '=', $request->input('email'))->first();
 
         try{
             $payment = $user->charge(
@@ -36,6 +36,7 @@ class UserController extends Controller
                 'total' => $payment->charges->data[0]->amount,
                 'payment_type' => 'book',
             ]);
+            return response()->json(["message" => "Uspiješno ste platitli knjigu."]);
         } catch(\Exception $e){
             return response()->json(['message' => $e->getMessage()], 500);
         }
@@ -87,14 +88,6 @@ class UserController extends Controller
             else {
                 return response()->json(['message' => 'Vaše članstvo je isteklo!']);
             }
-
-            /*
-            if(now()->between($user->created_at, $user->trial_ends_at)) {
-                return response()->json(['message' => 'Uplata je uspiješna!']);
-            }
-            else{
-                return response()->json(['message' => 'Vaša članska iskaznica više ne vrijedi']);
-            }*/
             
         } catch(\Exception $e){
             return response()->json(['message' => $e->getMessage()], 500);
