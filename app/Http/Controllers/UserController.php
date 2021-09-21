@@ -70,7 +70,7 @@ class UserController extends Controller
     
                 $order = $user->orders()->create([
                     'transaction_id' => $payment->charges->data[0]->id,
-                    'total' => $payment->charges->data[0]->amount,
+                    'total' => $payment->charges->data[0]->amount / 100,
                     'payment_type' => 'membership_card',
                 ]); 
 
