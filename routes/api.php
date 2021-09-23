@@ -107,4 +107,6 @@ Route::prefix('user')->group(function(){
     Route::post("/purchase/book", [App\Http\Controllers\UserController::class, 'purchase_book']);
     Route::post("/purchase/membership", [App\Http\Controllers\UserController::class, 'purchase_membership']);
 
+    Route::post("/coupons/{id}", [App\Http\Controllers\CouponController::class, 'index']);
+
 });

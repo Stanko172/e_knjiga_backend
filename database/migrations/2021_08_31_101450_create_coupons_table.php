@@ -15,7 +15,9 @@ class CreateCouponsTable extends Migration
     {
         Schema::create('coupons', function (Blueprint $table) {
             $table->id();
-            $table->integer('amaunt');
+            $table->foreignId('user_id')->constrained();
+            $table->string('code');
+            $table->decimal('price', $precision = 8, $scale = 2);
             $table->date('time_from');
             $table->date('time_to');
             $table->boolean('active');

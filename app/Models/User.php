@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Role;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\DB;
 use Laravel\Cashier\Billable;
 
@@ -63,5 +64,8 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
+    public function coupons(){
+        return $this->hasMany(Coupon::class);
+    }
     
 }
