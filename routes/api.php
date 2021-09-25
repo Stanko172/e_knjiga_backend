@@ -114,4 +114,7 @@ Route::prefix('user')->group(function(){
 
     //Book rating
     Route::post("/book_rating/save", [App\Http\Controllers\user\BookRatingController::class, 'create']);
+
+    //Book rental request
+    Route::post("/rental_request/create", [App\Http\Controllers\user\RentalRequestsController::class, 'create']);
 });

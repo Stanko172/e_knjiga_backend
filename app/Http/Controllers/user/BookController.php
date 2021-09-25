@@ -76,7 +76,7 @@ class BookController extends Controller
         $user = Auth::user();
         $rating = BookRating::where([['user_id', '=', $user->id], ['book_id', '=', $book->id]])->first();
         $book->is_rated = $rating === null ? 0 : 1;
-        $rating !== null ? $book->rating = (int)$rating->rating : null;
+        $rating !== null ? $book->rating = (float)$rating->rating : null;
 
         return $book;
     }

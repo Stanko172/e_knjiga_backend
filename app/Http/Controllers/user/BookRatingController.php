@@ -13,7 +13,7 @@ class BookRatingController extends Controller
 
         $book_rating = new BookRating();
         if($book_rating_check !== null){
-            $book_rating->id = $book_rating_check->id;
+            $book_rating = $book_rating_check;
         }
         $book_rating->book_id = $request->book_id;
         $book_rating->user_id = $request->user_id;
