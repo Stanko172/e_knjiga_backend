@@ -109,4 +109,9 @@ Route::prefix('user')->group(function(){
 
     Route::post("/coupons/{id}", [App\Http\Controllers\CouponController::class, 'index']);
 
+    //Book
+    Route::get("/book/{id}", [App\Http\Controllers\user\BookController::class, 'show']);
+
+    //Book rating
+    Route::post("/book_rating/save", [App\Http\Controllers\user\BookRatingController::class, 'create']);
 });

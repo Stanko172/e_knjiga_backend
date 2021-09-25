@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRentalsTable extends Migration
+class CreateRentalRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateRentalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('rentals', function (Blueprint $table) {
+        Schema::create('rental_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('book_id')->constrained();
-            $table->boolean('picked_up');
-            $table->boolean('returned');
+            $table->foreignId('book_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->boolean('confirmed');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateRentalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rentals');
+        Schema::dropIfExists('rental_requests');
     }
 }

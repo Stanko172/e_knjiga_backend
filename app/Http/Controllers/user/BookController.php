@@ -4,7 +4,10 @@ namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
+use App\Models\BookRating;
+use App\Models\RentalRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
@@ -60,5 +63,21 @@ class BookController extends Controller
                 return $books->unique('id')->values();
         }
         
+    }
+
+    public function show($id){
+        $book = Book::with('writers')
+            ->withCount('ratings')
+            ->withSum('ratings', 'rating')
+            ->where('id', '=', $id)->first();
+        $is_requested = RentalRequest::where([['book_id', '=', $id], ['confirmed', '=', false]])->first();
+        $book->is_requested = $is_requested === null ? 0 : 1;
+
+        $user = Auth::user();
+        $rating = BookRating::where([['user_id', '=', $user->id], ['book_id', '=', $book->id]])->first();
+        $book->is_rated = $rating === null ? 0 : 1;
+        $rating !== null ? $book->rating = (int)$rating->rating : null;
+
+        return $book;
     }
 }
