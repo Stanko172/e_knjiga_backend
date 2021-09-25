@@ -88,10 +88,16 @@ Route::prefix('admin')->group(function(){
     Route::post("/ebook/delete/{id}", [App\Http\Controllers\EbookController::class, 'destroy']);
     Route::post("/ebook/create", [App\Http\Controllers\EbookController::class, 'create']);
 
-    //Rental
+    //Rental request
     Route::get("/rental_request/index", [App\Http\Controllers\admin\RentalRequestController::class, 'index']);
     Route::post("/rental_request/create", [App\Http\Controllers\admin\RentalRequestController::class, 'create']);
     Route::post("/rental_request/delete", [App\Http\Controllers\admin\RentalRequestController::class, 'delete']);
+
+    //Rental
+    Route::get("/rental/index", [App\Http\Controllers\admin\RentalRequestConfirmedController::class, 'index']);
+    Route::patch("/rental/picked_up/{id}", [App\Http\Controllers\admin\RentalRequestConfirmedController::class, 'picked_up']);
+    Route::patch("/rental/returned/{id}", [App\Http\Controllers\admin\RentalRequestConfirmedController::class, 'returned']);
+
 });
 
 //User panel API routes
