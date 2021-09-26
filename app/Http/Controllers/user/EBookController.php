@@ -4,7 +4,9 @@ namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
 use App\Models\EBook;
+use App\Models\EBookRating;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EBookController extends Controller
 {
@@ -66,5 +68,19 @@ class EBookController extends Controller
                 return $books->unique('id')->values();
         }
         
+    }
+
+    public function show($id){
+        $book = EBook::with('writers')
+            ->withCount('ratings')
+            ->withSum('ratings', 'rating')
+            ->where('id', '=', $id)->first();
+
+        $user = Auth::user();
+        $rating = EBookRating::where([['user_id', '=', $user->id], ['e_book_id', '=', $book->id]])->first();
+        $book->is_rated = $rating === null ? 0 : 1;
+        $rating !== null ? $book->rating = (float)$rating->rating : null;
+
+        return $book;
     }
 }

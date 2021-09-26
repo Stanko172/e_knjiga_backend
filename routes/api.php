@@ -128,4 +128,10 @@ Route::prefix('user')->group(function(){
 
     //Book rental request
     Route::post("/rental_request/create", [App\Http\Controllers\user\RentalRequestsController::class, 'create']);
+
+    //Ebook
+    Route::get("/ebook/{id}", [App\Http\Controllers\user\EBookController::class, 'show']);
+
+    //Book rating
+    Route::post("/ebook_rating/save", [App\Http\Controllers\user\EBookRatingController::class, 'create']);
 });
