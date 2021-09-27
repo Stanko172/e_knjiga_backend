@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\User;
+use App\Models\Waiting_for_book;
+use App\Notifications\BookWait;
 
 use function GuzzleHttp\Promise\each;
 
@@ -71,14 +74,30 @@ class BookController extends Controller
 
         //Ažuriranje knjige
         $book->name = $request->name;
+
+        $test_amount = false;
+        if($book->amount <= 0){
+            $test_amount = true;
+        }
         $book->amount = $request->amount;
         $book->price = $request->price;
         $book->description = $request->description;
 
-        if($book->save){
+        if($book->save()){
+            if($test_amount && $book->amount > 0){
+                //Obavijesti za korisnike koji čekaju ovu knjigu
+                $wfp = Waiting_for_book::all();
+                foreach($wfp as $item){
+                    $user = User::find($item->user_id);
+                    $book = Book::find($item->book_id);
+                    $user->notify(new BookWait($book));
+
+                    $item->delete();
+                }
+            }
             return response()->json(['message' => "Knjiga spremljena!"]);
         }else{
-            return response()->json(['message' => "Greška prilikom spremnja knjige!"]);
+            return response()->json(['message' => "Greška prilikom spremanja knjige!"]);
         }
     }
 

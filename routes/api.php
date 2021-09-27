@@ -137,4 +137,11 @@ Route::prefix('user')->group(function(){
 
     //User activities
     Route::get("/activity/index", [App\Http\Controllers\user\ActivitiesController::class, 'index']);
+
+    //User notifications
+    Route::post("/notification/index", [App\Http\Controllers\user\NotificationsController::class, 'index']);
+
+    //Waiting for book
+    Route::post("/waiting_for_book/create", [App\Http\Controllers\user\WaitingForBooksController::class, 'create']);
+
 });
