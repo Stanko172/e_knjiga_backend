@@ -38,7 +38,13 @@ class UserController extends Controller
             ]);
             
             foreach(json_decode($request->input('cart'), true) as $item){
-                $order->books()->attach($item['id'], ['quantity' => $item['quantity']]);
+                if($item['type'] === 'book'){
+                    $order->books()->attach($item['id'], ['quantity' => $item['quantity']]);
+                }else if($item['type'] === 'ebook'){
+                    $order->ebooks()->attach($item['id'], ['quantity' => $item['quantity']]);
+                }else{
+                    return response()->json(['message' => 'Pogrešan artikal!'], 500);
+                }
             };
             //$order->load('books');
 
