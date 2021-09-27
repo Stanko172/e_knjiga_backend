@@ -134,4 +134,7 @@ Route::prefix('user')->group(function(){
 
     //Book rating
     Route::post("/ebook_rating/save", [App\Http\Controllers\user\EBookRatingController::class, 'create']);
+
+    //User activities
+    Route::get("/activity/index", [App\Http\Controllers\user\ActivitiesController::class, 'index']);
 });

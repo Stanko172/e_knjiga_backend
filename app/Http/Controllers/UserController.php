@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
@@ -40,8 +41,26 @@ class UserController extends Controller
             foreach(json_decode($request->input('cart'), true) as $item){
                 if($item['type'] === 'book'){
                     $order->books()->attach($item['id'], ['quantity' => $item['quantity']]);
+                    //Dodavanje stavke u aktivnosti
+                    $activity = new Activity();
+                    $activity->type = "book";
+                    $activity->item_id = $item['id'];
+                    $activity->message = "Kupili ste knjigu " . $item['name'] . " na datum: " . Carbon::now()->format('Y-m-d H:i:s'); 
+                    $activity->quantity = $item['quantity'];
+                    $activity->user_id = $user->id;
+                    
+                    $activity->save();
                 }else if($item['type'] === 'ebook'){
                     $order->ebooks()->attach($item['id'], ['quantity' => $item['quantity']]);
+                    //Dodavanje stavke u aktivnosti
+                    $activity = new Activity();
+                    $activity->type = "ebook";
+                    $activity->item_id = $item['id'];
+                    $activity->message = "Kupili ste e-knjigu " . $item['name'] . " na datum: " . Carbon::now()->format('Y-m-d H:i:s');
+                    $activity->quantity = $item['quantity'];
+                    $activity->user_id = $user->id;
+                    
+                    $activity->save();
                 }else{
                     return response()->json(['message' => 'Pogrešan artikal!'], 500);
                 }
@@ -93,6 +112,17 @@ class UserController extends Controller
                 $user->state = $request->state;
                 $user->postal_code = $request->postal_code;
                 $user->save();
+
+                //Dodavanje stavke u aktivnosti
+                $activity = new Activity();
+                $activity->type = "membership";
+                $activity->item_id = $user->id;
+                $activity->message = "Uplatitili ste članarinu" .  " na datum: " . Carbon::now()->format('Y-m-d H:i:s'); 
+                $activity->quantity = 1;
+                $activity->user_id = $user->id;
+                
+                $activity->save();
+
                 return response()->json(['message' => 'Uspiješno ste se učlanili!']);
             } else if ($date < $user->trial_ends_at) {
                 return response()->json(['message' => 'Članstvo već postoji!']);
