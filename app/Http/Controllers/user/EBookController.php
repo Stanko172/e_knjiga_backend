@@ -7,6 +7,8 @@ use App\Models\EBook;
 use App\Models\EBookRating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class EBookController extends Controller
 {
@@ -77,6 +79,15 @@ class EBookController extends Controller
             ->where('id', '=', $id)->first();
 
         $user = Auth::user();
+        
+        //Provjera je li korisnik kupio knjigu
+        //Ako jeste može preuzeti pdf, inače ne
+        if (! Gate::allows('ebook-purchased', $book)) {
+            $book->is_purchased = 0;
+        }else{
+            $book->is_purchased = 1;  
+        }
+
         $rating = EBookRating::where([['user_id', '=', $user->id], ['e_book_id', '=', $book->id]])->first();
         $book->is_rated = $rating === null ? 0 : 1;
         $rating !== null ? $book->rating = (float)$rating->rating : null;
