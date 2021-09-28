@@ -144,4 +144,8 @@ Route::prefix('user')->group(function(){
     //Waiting for book
     Route::post("/waiting_for_book/create", [App\Http\Controllers\user\WaitingForBooksController::class, 'create']);
 
+    //Favorites
+    Route::get("/favorite/index", [App\Http\Controllers\user\FavoritesController::class, 'index']);
+    Route::post("/favorite/save", [App\Http\Controllers\user\FavoritesController::class, 'save']);
+
 });

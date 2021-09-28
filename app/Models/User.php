@@ -67,5 +67,9 @@ class User extends Authenticatable
     public function coupons(){
         return $this->hasMany(Coupon::class);
     }
+
+    public function favorites(){
+        return $this->belongsToMany(Writer::class, 'favorites', 'user_id', 'writer_id');
+    }
     
 }
