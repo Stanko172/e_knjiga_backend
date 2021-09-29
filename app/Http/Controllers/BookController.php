@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\Favorite;
 use App\Models\User;
 use App\Models\Waiting_for_book;
+use App\Models\Writer;
 use App\Notifications\BookWait;
+use App\Notifications\NewBookFromFavorite;
 
 use function GuzzleHttp\Promise\each;
 
@@ -45,6 +48,16 @@ class BookController extends Controller
         }, $request->writers);
 
         $book->writers()->attach($writers);
+
+        //Obavijesti za korisnike kojima je pisac u favorites
+        foreach($writers as $writer){
+            $favorites = Favorite::where('writer_id', '=', $writer)->get();
+            foreach($favorites as $favorite){
+                $writer = Writer::find($favorite->writer_id);
+                $user = User::find($favorite->user_id);
+                $user->notify(new NewBookFromFavorite($book, $writer));
+            }
+        }
 
         //Dodavanje žanrova
         $genres = array_map(function($genre){
