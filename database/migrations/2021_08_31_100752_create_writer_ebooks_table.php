@@ -15,8 +15,8 @@ class CreateWriterEbooksTable extends Migration
     {
         Schema::create('writer_ebooks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('e_book_id')->constrained();
-            $table->foreignId('writer_id')->constrained();
+            $table->foreignId('e_book_id')->constrained()->onDelete('cascade');
+            $table->foreignId('writer_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

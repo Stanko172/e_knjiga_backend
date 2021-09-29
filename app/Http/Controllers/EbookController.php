@@ -4,11 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\EBook;
+use App\Models\Favorite;
+use App\Models\User;
+use App\Models\Waiting_for_ebook;
+use App\Models\Writer;
+use App\Notifications\EBookWait;
+use App\Notifications\NewEbookFromFavorite;
 
 class EbookController extends Controller
 {
     public function index(){
-        $ebooks = EBook::with(['genres', 'writers'])->get();
+        $ebooks = EBook::with(['genres', 'writers'])->orderByDesc('id')->get();
         return $ebooks;
     }
     /**
@@ -30,7 +36,32 @@ class EbookController extends Controller
             'price' => $request->input('price')
         ]);
         $ebook->save();
-        return response()->json(['message' => 'Ebook created']);
+        
+        //Dodavanje pisaca
+        $writers = array_map(function($writer){
+            return $writer['id'];
+        }, $request->writers);
+
+        $ebook->writers()->attach($writers);
+
+        //Obavijesti za korisnike kojima je pisac u favorites
+        foreach($writers as $writer){
+            $favorites = Favorite::where('writer_id', '=', $writer)->get();
+            foreach($favorites as $favorite){
+                $writer = Writer::find($favorite->writer_id);
+                $user = User::find($favorite->user_id);
+                $user->notify(new NewEbookFromFavorite($ebook, $writer));
+            }
+        }
+
+        //Dodavanje žanrova
+        $genres = array_map(function($genre){
+            return $genre['id'];
+        }, $request->genres);
+
+        $ebook->genres()->attach($genres);
+
+        return response()->json(['message' => 'E-knjiga kreirana']);
     }
 
     /**
@@ -75,10 +106,30 @@ class EbookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ebook = EBook::find($id);
-        $ebook->update($request->all());
+        $book = EBook::find($id);
 
-        return response()->json(['message' => "Ebook updated"]);
+        $writers = array_map(function($writer){
+            return $writer['id'];
+        }, $request->writers);
+
+        $genres = array_map(function($genre){
+            return $genre['id'];
+        }, $request->genres);
+
+        //Ažuriranje međutablica
+        $book->writers()->sync($writers);
+        $book->genres()->sync($genres);
+
+        //Ažuriranje knjige
+        $book->name = $request->name;
+        $book->price = $request->price;
+        $book->description = $request->description;
+
+        if($book->save()){
+            return response()->json(['message' => "E-knjiga spremljena!"]);
+        }else{
+            return response()->json(['message' => "Greška prilikom spremanja e-knjige!"]);
+        }
     }
 
     /**
@@ -93,10 +144,10 @@ class EbookController extends Controller
         $ebook = Ebook::find($id);
         $result = $ebook->delete();
         if($result){
-            return ['message' => 'Ebook deleted'];
+            return ['message' => 'E-knjiga izbrisana!'];
         }
         else{
-            return ['message' => 'The ebook has not been deleted'];
+            return ['message' => 'Greška prilikom brisanja e-knjige!'];
         }
     }
 }

@@ -7,20 +7,22 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class EBookWait extends Notification
+class NewEbookFromFavorite extends Notification
 {
     use Queueable;
 
     public $ebook;
+    public $writer;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($ebook)
+    public function __construct($ebook, $writer)
     {
         $this->ebook = $ebook;
+        $this->writer = $writer;
     }
 
     /**
@@ -57,8 +59,8 @@ class EBookWait extends Notification
     public function toArray($notifiable)
     {
         return [
-            'ebook' => $this->ebook,
-            'message' => 'E-knjiga: ' . $this->ebook->name . ' sada je na stanju.'
+            "favorite_ebook" => $this->ebook,
+            "message" => "Na stanju je nova e-knjiga Vašeg omiljenog pisca " . $this->writer->name . " " . $this->writer->surname . ", pod nazivom: " . $this->ebook->name
         ];
     }
 }

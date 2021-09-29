@@ -15,8 +15,8 @@ class CreateEbookGenresTable extends Migration
     {
         Schema::create('ebook_genres', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('e_book_id')->constrained();
-            $table->foreignId('genre_id')->constrained();
+            $table->foreignId('e_book_id')->constrained()->onDelete('cascade');
+            $table->foreignId('genre_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

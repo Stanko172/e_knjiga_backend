@@ -99,7 +99,7 @@ class BookController extends Controller
         if($book->save()){
             if($test_amount && $book->amount > 0){
                 //Obavijesti za korisnike koji čekaju ovu knjigu
-                $wfp = Waiting_for_book::all();
+                $wfp = Waiting_for_book::where('book_id', '=', $book->id)->get();
                 foreach($wfp as $item){
                     $user = User::find($item->user_id);
                     $book = Book::find($item->book_id);
