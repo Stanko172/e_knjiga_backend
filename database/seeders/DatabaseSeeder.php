@@ -35,7 +35,8 @@ class DatabaseSeeder extends Seeder
             BookRatingSeeder::class,
             EBookRatingSeeder::class,
             CouponSeeder::class,
-            BookImageSeeder::class
+            BookImageSeeder::class,
+            EbookImageSeeder::class
         ]);
     }
 }

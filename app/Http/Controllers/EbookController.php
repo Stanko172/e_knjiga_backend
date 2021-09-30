@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\EBook;
+use App\Models\EbookImage;
 use App\Models\Favorite;
 use App\Models\User;
 use App\Models\Waiting_for_ebook;
@@ -14,7 +15,7 @@ use App\Notifications\NewEbookFromFavorite;
 class EbookController extends Controller
 {
     public function index(){
-        $ebooks = EBook::with(['genres', 'writers'])->orderByDesc('id')->get();
+        $ebooks = EBook::with(['genres', 'writers', 'image'])->orderByDesc('id')->get();
         return $ebooks;
     }
     /**
@@ -24,21 +25,24 @@ class EbookController extends Controller
      */
     public function create(Request $request)
     {
+        /*
         $request->validate([
             'name' => ['required'],
             'description' => ['required'],
             'price' => ['required']
         ]);
+        */
 
         $ebook = new Ebook([
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-            'price' => $request->input('price')
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price
         ]);
         $ebook->save();
         
         //Dodavanje pisaca
         $writers = array_map(function($writer){
+            $writer = json_decode($writer, true);
             return $writer['id'];
         }, $request->writers);
 
@@ -56,12 +60,29 @@ class EbookController extends Controller
 
         //Dodavanje žanrova
         $genres = array_map(function($genre){
+            $genre = json_decode($genre, true);
             return $genre['id'];
         }, $request->genres);
 
         $ebook->genres()->attach($genres);
 
-        return response()->json(['message' => 'E-knjiga kreirana']);
+        //Dodavanje slike za knjigu
+        $fileUpload = new EbookImage();
+
+        $file_name = time().'_'.$request->file->getClientOriginalName();
+        $file_path = $request->file('file')->storeAs('ebook_uploads', $file_name, 'public');
+
+        $fileUpload->name = time().'_'.$request->file->getClientOriginalName();
+        $fileUpload->path = '/storage/' . $file_path;
+        $fileUpload->e_book_id = $ebook->id;
+
+        if($fileUpload->save()){
+            return response()->json(['success'=>['E-knjiga uspješno kreirana.']], 200);
+        }else{
+            return response()->json(['error' => "Greška prilikom kreiranja e-knjige!"], 500);
+        }
+
+        //return response()->json(['message' => 'E-knjiga kreirana']);
     }
 
     /**
@@ -109,10 +130,12 @@ class EbookController extends Controller
         $book = EBook::find($id);
 
         $writers = array_map(function($writer){
+            $writer = json_decode($writer, true);
             return $writer['id'];
         }, $request->writers);
 
         $genres = array_map(function($genre){
+            $genre = json_decode($genre, true);
             return $genre['id'];
         }, $request->genres);
 
@@ -126,7 +149,30 @@ class EbookController extends Controller
         $book->description = $request->description;
 
         if($book->save()){
-            return response()->json(['message' => "E-knjiga spremljena!"]);
+
+            //Brisanje stare slike
+            $book_image = EbookImage::where('e_book_id', '=', $book->id)->first();
+            $book_image->delete();
+
+            unlink(storage_path('app/public/ebook_uploads/'. $book_image->name ));
+
+            //Dodavanje slike za knjigu
+            $fileUpload = new EbookImage();
+
+            $file_name = time().'_'.$request->file->getClientOriginalName();
+            $file_path = $request->file('file')->storeAs('ebook_uploads', $file_name, 'public');
+
+            $fileUpload->name = time().'_'.$request->file->getClientOriginalName();
+            $fileUpload->path = '/storage/' . $file_path;
+            $fileUpload->e_book_id = $book->id;
+
+            if($fileUpload->save()){
+                return response()->json(['success'=>['E-knjiga uspješno kreirana.']], 200);
+            }else{
+                return response()->json(['error' => "Greška prilikom kreiranja e-knjige!"], 500);
+            }
+
+            //return response()->json(['message' => "E-knjiga spremljena!"]);
         }else{
             return response()->json(['message' => "Greška prilikom spremanja e-knjige!"]);
         }
@@ -142,6 +188,13 @@ class EbookController extends Controller
     {   
         #return Book::where('id', $id)->delete();
         $ebook = Ebook::find($id);
+
+        //Brisanje stare slike
+        $book_image = EbookImage::where('e_book_id', '=', $id)->first();
+        $book_image->delete();
+
+        unlink(storage_path('app/public/ebook_uploads/'. $book_image->name ));
+
         $result = $ebook->delete();
         if($result){
             return ['message' => 'E-knjiga izbrisana!'];

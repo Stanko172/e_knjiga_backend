@@ -30,4 +30,8 @@ class EBook extends Model
     public function ratings(){
         return $this->hasMany(EBookRating::class);
     }
+
+    public function image(){
+        return $this->hasOne(EbookImage::class);
+    }
 }
