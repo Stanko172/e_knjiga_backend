@@ -41,4 +41,8 @@ class Book extends Model
     public function orders(){
         return $this->belongsToMany(Order::class, 'order_books', 'order_id', 'book_id');
     }
+
+    public function image(){
+        return $this->hasOne(BookImage::class);
+    }
 }

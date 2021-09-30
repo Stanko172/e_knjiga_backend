@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\BookImage;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -34,6 +35,7 @@ class DatabaseSeeder extends Seeder
             BookRatingSeeder::class,
             EBookRatingSeeder::class,
             CouponSeeder::class,
+            BookImageSeeder::class
         ]);
     }
 }
