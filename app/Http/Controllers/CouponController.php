@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Coupon;
 use App\Models\User;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Auth;
 
 class CouponController extends Controller
 {
@@ -39,5 +39,12 @@ class CouponController extends Controller
         
         //$user = User::find(1)->coupons()->where('code', $request->code)->first();
         //return $user;
+    }
+
+    public function show(){
+        $user = Auth::user();
+        $coupons = Coupon::where('user_id', '=', $user->id)->get();
+
+        return $coupons;
     }
 }

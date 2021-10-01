@@ -150,4 +150,7 @@ Route::prefix('user')->group(function(){
     Route::get("/favorite/index", [App\Http\Controllers\user\FavoritesController::class, 'index']);
     Route::post("/favorite/save", [App\Http\Controllers\user\FavoritesController::class, 'save']);
 
+    //Coupons
+    Route::get("/coupon/show", [App\Http\Controllers\CouponController::class, 'show']);
+
 });
