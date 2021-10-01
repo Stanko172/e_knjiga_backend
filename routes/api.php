@@ -140,6 +140,8 @@ Route::prefix('user')->group(function(){
 
     //User notifications
     Route::post("/notification/index", [App\Http\Controllers\user\NotificationsController::class, 'index']);
+    Route::post("/notification/update", [App\Http\Controllers\user\NotificationsController::class, 'edit']);
+    Route::post("/notification/delete", [App\Http\Controllers\user\NotificationsController::class, 'delete']);
 
     //Waiting for book
     Route::post("/waiting_for_book/create", [App\Http\Controllers\user\WaitingForBooksController::class, 'create']);
