@@ -9,7 +9,16 @@ class Coupon extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'code',
+        'price',
+        'time_from',
+        'time_to',
+        'user_id',
+        'active'
+    ];
+
     public function users(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

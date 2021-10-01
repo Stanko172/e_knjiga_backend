@@ -98,6 +98,13 @@ Route::prefix('admin')->group(function(){
     Route::patch("/rental/picked_up/{id}", [App\Http\Controllers\admin\RentalRequestConfirmedController::class, 'picked_up']);
     Route::patch("/rental/returned/{id}", [App\Http\Controllers\admin\RentalRequestConfirmedController::class, 'returned']);
 
+    //Coupon
+    Route::get("/coupon/index", [App\Http\Controllers\admin\CouponController::class, "index"]);
+    Route::post("/coupon/update/{id}", [App\Http\Controllers\admin\CouponController::class, 'update']);
+    Route::post("/coupon/delete/{id}", [App\Http\Controllers\admin\CouponController::class, 'destroy']);
+    Route::post("/coupon/create", [App\Http\Controllers\admin\CouponController::class, 'create']);
+    Route::get("/coupon/users", [App\Http\Controllers\admin\CouponController::class, 'users']);
+
 });
 
 //User panel API routes
