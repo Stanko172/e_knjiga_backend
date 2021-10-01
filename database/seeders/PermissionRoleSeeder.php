@@ -65,6 +65,12 @@ class PermissionRoleSeeder extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
+                'permission_id' => DB::table('permissions')->where('title', 'rental_access')->first()->id,
+                'role_id' => DB::table('roles')->where('title', 'user')->first()->id,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
                 'permission_id' => DB::table('permissions')->where('title', 'user_dashboard_access')->first()->id,
                 'role_id' => DB::table('roles')->where('title', 'user')->first()->id,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -91,6 +97,12 @@ class PermissionRoleSeeder extends Seeder
             [
                 'permission_id' => DB::table('permissions')->where('title', 'coupons_access')->first()->id,
                 'role_id' => DB::table('roles')->where('title', 'user')->first()->id,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
+                'permission_id' => DB::table('permissions')->where('title', 'coupons_access')->first()->id,
+                'role_id' => DB::table('roles')->where('title', 'admin')->first()->id,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
