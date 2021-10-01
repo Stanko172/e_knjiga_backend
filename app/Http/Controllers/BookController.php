@@ -132,28 +132,31 @@ class BookController extends Controller
                 }
             }
 
-            //Brisanje stare slike
-            $book_image = BookImage::where('book_id', '=', $book->id)->first();
-            $book_image->delete();
+            if($request->file !== null){
+                //Brisanje stare slike
+                $book_image = BookImage::where('book_id', '=', $book->id)->first();
+                $book_image->delete();
 
-            unlink(storage_path('app/public/book_uploads/'. $book_image->name ));
+                unlink(storage_path('app/public/book_uploads/'. $book_image->name ));
 
-            //Dodavanje slike za knjigu
-            $fileUpload = new BookImage();
+                //Dodavanje slike za knjigu
+                $fileUpload = new BookImage();
 
-            $file_name = time().'_'.$request->file->getClientOriginalName();
-            $file_path = $request->file('file')->storeAs('book_uploads', $file_name, 'public');
+                $file_name = time().'_'.$request->file->getClientOriginalName();
+                $file_path = $request->file('file')->storeAs('book_uploads', $file_name, 'public');
 
-            $fileUpload->name = time().'_'.$request->file->getClientOriginalName();
-            $fileUpload->path = '/storage/' . $file_path;
-            $fileUpload->book_id = $book->id;
+                $fileUpload->name = time().'_'.$request->file->getClientOriginalName();
+                $fileUpload->path = '/storage/' . $file_path;
+                $fileUpload->book_id = $book->id;
 
-            if($fileUpload->save()){
-                return response()->json(['success'=>['Knjiga uspješno kreirana.']], 200);
+                if($fileUpload->save()){
+                    return response()->json(['success'=>['Knjiga uspješno kreirana.']], 200);
+                }else{
+                    return response()->json(['error' => "Greška prilikom kreiranja knjige!"], 500);
+                }
             }else{
-                return response()->json(['error' => "Greška prilikom kreiranja knjige!"], 500);
+                return response()->json(['message' => "Knjiga spremljena!"]);
             }
-            //return response()->json(['message' => "Knjiga spremljena!"]);
         }else{
             return response()->json(['message' => "Greška prilikom spremanja knjige!"]);
         }

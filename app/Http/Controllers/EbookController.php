@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\EBook;
 use App\Models\EbookImage;
 use App\Models\Favorite;
+use App\Models\FileUpload;
 use App\Models\User;
 use App\Models\Waiting_for_ebook;
 use App\Models\Writer;
@@ -15,7 +16,7 @@ use App\Notifications\NewEbookFromFavorite;
 class EbookController extends Controller
 {
     public function index(){
-        $ebooks = EBook::with(['genres', 'writers', 'image'])->orderByDesc('id')->get();
+        $ebooks = EBook::with(['genres', 'writers', 'image', 'pdf'])->orderByDesc('id')->get();
         return $ebooks;
     }
     /**
@@ -77,7 +78,21 @@ class EbookController extends Controller
         $fileUpload->e_book_id = $ebook->id;
 
         if($fileUpload->save()){
-            return response()->json(['success'=>['E-knjiga uspješno kreirana.']], 200);
+            //Dodavanje pdf-a za knjigu
+            $fileUpload = new FileUpload();
+
+            $file_name = time().'_'.$request->pdf->getClientOriginalName();
+            $file_path = $request->file('pdf')->storeAs('file_uploads', $file_name, 'public');
+
+            $fileUpload->name = time().'_'.$request->pdf->getClientOriginalName();
+            $fileUpload->path = '/storage/' . $file_path;
+            $fileUpload->e_book_id = $ebook->id;
+
+            if($fileUpload->save()){
+                return response()->json(['success'=>['E-knjiga uspješno kreirana.']], 200);
+            }else{
+                return response()->json(['error' => "Greška prilikom kreiranja e-knjige!"], 500);
+            }
         }else{
             return response()->json(['error' => "Greška prilikom kreiranja e-knjige!"], 500);
         }
@@ -150,29 +165,54 @@ class EbookController extends Controller
 
         if($book->save()){
 
-            //Brisanje stare slike
-            $book_image = EbookImage::where('e_book_id', '=', $book->id)->first();
-            $book_image->delete();
+            if($request->file !== null){
+                //Brisanje stare slike
+                $book_image = EbookImage::where('e_book_id', '=', $book->id)->first();
+                $book_image->delete();
 
-            unlink(storage_path('app/public/ebook_uploads/'. $book_image->name ));
+                unlink(storage_path('app/public/ebook_uploads/'. $book_image->name ));
 
-            //Dodavanje slike za knjigu
-            $fileUpload = new EbookImage();
+                //Dodavanje slike za knjigu
+                $fileUpload = new EbookImage();
 
-            $file_name = time().'_'.$request->file->getClientOriginalName();
-            $file_path = $request->file('file')->storeAs('ebook_uploads', $file_name, 'public');
+                $file_name = time().'_'.$request->file->getClientOriginalName();
+                $file_path = $request->file('file')->storeAs('ebook_uploads', $file_name, 'public');
 
-            $fileUpload->name = time().'_'.$request->file->getClientOriginalName();
-            $fileUpload->path = '/storage/' . $file_path;
-            $fileUpload->e_book_id = $book->id;
+                $fileUpload->name = time().'_'.$request->file->getClientOriginalName();
+                $fileUpload->path = '/storage/' . $file_path;
+                $fileUpload->e_book_id = $book->id;
 
-            if($fileUpload->save()){
-                return response()->json(['success'=>['E-knjiga uspješno kreirana.']], 200);
-            }else{
-                return response()->json(['error' => "Greška prilikom kreiranja e-knjige!"], 500);
+                if(!$fileUpload->save()){
+                    return response()->json(['error'=>['Greška pilikom spremanja e-knjige']], 200);
+                }
             }
 
-            //return response()->json(['message' => "E-knjiga spremljena!"]);
+            if($request->pdf !== null){
+                //Brisanje starog pdf-a
+                $book_pdf = FileUpload::where('e_book_id', '=', $book->id)->first();
+                $book_pdf->delete();
+
+                unlink(storage_path('app/public/file_uploads/'. $book_pdf->name ));
+
+                //Dodavanje pdf-a za knjigu
+                $fileUpload = new FileUpload();
+
+                $file_name = time().'_'.$request->pdf->getClientOriginalName();
+                $file_path = $request->file('pdf')->storeAs('file_uploads', $file_name, 'public');
+
+                $fileUpload->name = time().'_'.$request->pdf->getClientOriginalName();
+                $fileUpload->path = '/storage/' . $file_path;
+                $fileUpload->e_book_id = $book->id;
+
+                if($fileUpload->save()){
+                    return response()->json(['success'=>['E-knjiga uspješno spremljena.']], 200);
+                }else{
+                    return response()->json(['error' => "Greška prilikom kreiranja e-knjige!"], 500);
+                }
+            }
+
+            return response()->json(['success'=>['E-knjiga uspješno kreirana.']], 200);
+
         }else{
             return response()->json(['message' => "Greška prilikom spremanja e-knjige!"]);
         }
@@ -194,6 +234,12 @@ class EbookController extends Controller
         $book_image->delete();
 
         unlink(storage_path('app/public/ebook_uploads/'. $book_image->name ));
+
+        //Brisanje starog pdfa
+        $book_pdf = FileUpload::where('e_book_id', '=', $id)->first();
+        $book_pdf->delete();
+
+        unlink(storage_path('app/public/file_uploads/'. $book_pdf->name ));
 
         $result = $ebook->delete();
         if($result){

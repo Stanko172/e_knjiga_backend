@@ -34,4 +34,8 @@ class EBook extends Model
     public function image(){
         return $this->hasOne(EbookImage::class);
     }
+
+    public function pdf(){
+        return $this->hasOne(FileUpload::class);
+    }    
 }
