@@ -71,5 +71,9 @@ class User extends Authenticatable
     public function favorites(){
         return $this->belongsToMany(Writer::class, 'favorites', 'user_id', 'writer_id');
     }
+
+    public function image(){
+        return $this->hasOne(ProfileImage::class);
+    }
     
 }

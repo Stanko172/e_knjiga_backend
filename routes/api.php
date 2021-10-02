@@ -163,4 +163,9 @@ Route::prefix('user')->group(function(){
     //Search (articles)
     Route::post("/articles/search", [App\Http\Controllers\user\ArticlesSearch::class, 'index']);
 
+    //User profile
+    Route::get("/profile/show", [App\Http\Controllers\user\UserProfileController::class, 'show']);
+    Route::post("/profile/image", [App\Http\Controllers\user\UserProfileController::class, 'image']);
+    Route::post("/profile/save", [App\Http\Controllers\user\UserProfileController::class, 'save']);
+
 });
