@@ -160,4 +160,7 @@ Route::prefix('user')->group(function(){
     //Coupons
     Route::get("/coupon/show", [App\Http\Controllers\CouponController::class, 'show']);
 
+    //Search (articles)
+    Route::post("/articles/search", [App\Http\Controllers\user\ArticlesSearch::class, 'index']);
+
 });
