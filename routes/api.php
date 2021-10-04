@@ -168,4 +168,9 @@ Route::prefix('user')->group(function(){
     Route::post("/profile/image", [App\Http\Controllers\user\UserProfileController::class, 'image']);
     Route::post("/profile/save", [App\Http\Controllers\user\UserProfileController::class, 'save']);
 
+    //Coupons
+    Route::get("/promotion/index", [App\Http\Controllers\user\PromotionController::class, 'index']);
+    Route::get("/promotion/{id}", [App\Http\Controllers\user\PromotionController::class, 'show']);
+    Route::post("/promotion/{id}", [App\Http\Controllers\user\PromotionController::class, 'purchase_promotion']);
+
 });

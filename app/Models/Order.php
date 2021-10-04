@@ -23,4 +23,8 @@ class Order extends Model
     public function ebooks(){
         return $this->belongsToMany(EBook::class, 'order_ebooks')->withPivot('quantity');
     }
+
+    public function promotions(){
+        return $this->belongsToMany(Promotion::class, 'order_promotions')->withPivot('quantity');
+    }
 }
