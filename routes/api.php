@@ -105,6 +105,12 @@ Route::prefix('admin')->group(function(){
     Route::post("/coupon/create", [App\Http\Controllers\admin\CouponController::class, 'create']);
     Route::get("/coupon/users", [App\Http\Controllers\admin\CouponController::class, 'users']);
 
+    //Writer
+    Route::get("/promotion/index", [App\Http\Controllers\admin\PromotionController::class, "index"]);
+    Route::post("/promotion/update/{id}", [App\Http\Controllers\admin\PromotionController::class, 'update']);
+    Route::post("/promotion/delete/{id}", [App\Http\Controllers\admin\PromotionController::class, 'destroy']);
+    Route::post("/promotion/create", [App\Http\Controllers\admin\PromotionController::class, 'create']);
+
 });
 
 //User panel API routes
