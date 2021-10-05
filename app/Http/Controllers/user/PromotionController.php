@@ -53,12 +53,10 @@ class PromotionController extends Controller
 
             $order->promotions()->attach($item['id'], ['quantity' => 1]);
 
-            $user->trial_ends_at = now()->addDays(365);
-            $user->address = $request->address;
-            $user->city = $request->city;
-            $user->state = $request->state;
-            $user->postal_code = $request->postal_code;
-            $user->save();
+            $promotion = Promotion::where('id', '=', $item['id'])->first();
+            $promotion->purchases += 1;
+
+            $promotion->save();
 
             //Dodavanje stavke u aktivnosti
             $activity = new Activity();
