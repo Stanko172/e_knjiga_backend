@@ -20,7 +20,7 @@ class BookController extends Controller
         //iskoristiti i za AVG ocjenu
         switch($tab){
             case '1':
-                $books = Book::with('genres','writers')
+                $books = Book::with('genres','writers', 'image')
                     ->join('book_writers', 'book_writers.book_id', '=', 'books.id')
                     ->join('book_genres', 'book_genres.book_id', '=', 'books.id')
                     ->select('books.*')
@@ -44,7 +44,7 @@ class BookController extends Controller
                 break;
             
             case '0':
-                $books = Book::with('genres','writers')
+                $books = Book::with('genres','writers', 'image')
                     ->join('book_writers', 'book_writers.book_id', '=', 'books.id')
                     ->join('book_genres', 'book_genres.book_id', '=', 'books.id')
                     ->select('books.*')

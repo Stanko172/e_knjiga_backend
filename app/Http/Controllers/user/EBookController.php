@@ -21,7 +21,7 @@ class EBookController extends Controller
         //iskoristiti i za AVG ocjenu
         switch($tab){
             case '1':
-                $books = EBook::with('genres','writers')
+                $books = EBook::with('genres','writers', 'image')
                     ->join('writer_ebooks', 'writer_ebooks.e_book_id', '=', 'e_books.id')
                     ->join('ebook_genres', 'ebook_genres.e_book_id', '=', 'e_books.id')
                     ->select('e_books.*')
@@ -50,7 +50,7 @@ class EBookController extends Controller
                 break;
             
             case '0':
-                $books = EBook::with('genres','writers')
+                $books = EBook::with('genres','writers', 'image')
                 ->join('writer_ebooks', 'writer_ebooks.e_book_id', '=', 'e_books.id')
                 ->join('ebook_genres', 'ebook_genres.e_book_id', '=', 'e_books.id')
                 ->select('e_books.*')
