@@ -51,4 +51,9 @@ class NotificationsController extends Controller
             }
         }
     }
+
+    public function unread_num(){
+        $unread_num = count(Auth::user()->unreadNotifications);
+        return response()->json(['unread_num' => $unread_num]);
+    }
 }
