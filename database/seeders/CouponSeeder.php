@@ -17,18 +17,26 @@ class CouponSeeder extends Seeder
     {
         DB::table('coupons')->insert([
             'user_id' => 1,
-            'code' => 'probnicod',
+            'code' => 'code1',
             'price' => 10.00,
             'time_from' => Carbon::now()->format('Y-m-d H:i:s'),
-            'time_to' => Carbon::now()->format('Y-m-d H:i:s'),
+            'time_to' => Carbon::now()->addDays(10),
             'active' => true,
         ]);
         DB::table('coupons')->insert([
             'user_id' => 1,
-            'code' => 'Probnicod',
+            'code' => 'code2',
             'price' => 5.00,
             'time_from' => Carbon::now()->format('Y-m-d H:i:s'),
-            'time_to' => Carbon::now()->format('Y-m-d H:i:s'),
+            'time_to' => Carbon::now()->addDays(11),
+            'active' => true,
+        ]);
+        DB::table('coupons')->insert([
+            'user_id' => 1,
+            'code' => 'code3',
+            'price' => 8.00,
+            'time_from' => Carbon::now()->format('Y-m-d H:i:s'),
+            'time_to' => Carbon::now()->subDays(5),
             'active' => true,
         ]);
     }
