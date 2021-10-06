@@ -116,6 +116,7 @@ Route::prefix('admin')->group(function(){
 //User panel API routes
 Route::prefix('user')->group(function(){
     Route::post("/membership_request/create", [App\Http\Controllers\MembershipRequestController::class, 'create']);
+    Route::post("/membership_request/invite/create", [App\Http\Controllers\user\CallAFriendController::class, 'store']);
     Route::get("/shop_office/index", [App\Http\Controllers\ShopOfficeController::class, 'index']);
 
     //Writer

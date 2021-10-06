@@ -15,7 +15,7 @@ class CreateWaitingForFriendsTable extends Migration
     {
         Schema::create('waiting_for_friends', function (Blueprint $table) {
             $table->id();
-            $table->string('token');
+            $table->string('token')->unique();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
