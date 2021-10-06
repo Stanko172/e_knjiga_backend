@@ -184,4 +184,7 @@ Route::prefix('user')->group(function(){
     //Call a friend
     Route::post("/call_a_friend/create", [App\Http\Controllers\user\CallAFriendController::class, 'create']);
 
+    //Contact form
+    Route::post("/contact/create", [App\Http\Controllers\user\ContactController::class, 'create']);
+
 });
