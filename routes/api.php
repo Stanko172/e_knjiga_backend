@@ -180,4 +180,7 @@ Route::prefix('user')->group(function(){
     Route::get("/promotion/{id}", [App\Http\Controllers\user\PromotionController::class, 'show']);
     Route::post("/promotion/{id}", [App\Http\Controllers\user\PromotionController::class, 'purchase_promotion']);
 
+    //Call a friend
+    Route::post("/call_a_friend/create", [App\Http\Controllers\user\CallAFriendController::class, 'create']);
+
 });
