@@ -5,10 +5,12 @@ namespace App\Http\Controllers\user;
 use App\Http\Controllers\Controller;
 use App\Models\EBook;
 use App\Models\EBookRating;
+use App\Models\FileUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class EBookController extends Controller
 {
@@ -93,5 +95,22 @@ class EBookController extends Controller
         $rating !== null ? $book->rating = (float)$rating->rating : null;
 
         return $book;
+    }
+
+    public function download_pdf($id){
+        $file = FileUpload::find($id);
+
+        //return Storage::download("/file_uploads/" . $file->name);
+        //$file = Storage::disk('public')->get('/file_uploads/' . $file->name);
+
+        //return response()->download(storage_path("app/public/file_uploads/{$file->name}"));
+
+        $file= storage_path("app/public/file_uploads/{$file->name}");
+
+        $headers = [
+              'Content-Type' => 'application/pdf',
+           ];
+
+        return response()->download($file, 'filename.pdf', $headers);
     }
 }

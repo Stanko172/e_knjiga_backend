@@ -192,4 +192,7 @@ Route::prefix('user')->group(function(){
     //Contact form
     Route::post("/contact/create", [App\Http\Controllers\user\ContactController::class, 'create']);
 
+    //Download PDF
+    Route::get("/download/{id}", [App\Http\Controllers\user\EBookController::class, 'download_pdf']);
+
 });
