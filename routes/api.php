@@ -111,6 +111,9 @@ Route::prefix('admin')->group(function(){
     Route::post("/promotion/delete/{id}", [App\Http\Controllers\admin\PromotionController::class, 'destroy']);
     Route::post("/promotion/create", [App\Http\Controllers\admin\PromotionController::class, 'create']);
 
+    //Dashboard
+    Route::get("/dashboard/dashboard_info", [App\Http\Controllers\admin\DashboardController::class, 'dashboard_info']);
+
 });
 
 //User panel API routes
