@@ -91,4 +91,26 @@ class DashboardController extends Controller
 
         return response()->json(['bar_chart' => $users_chart_data, 'pie_chart' => $pie_chart_data]);
     }
+
+    public function table_data(Request $request){
+        if($request->category === 'iznajmljivanja'){
+            $data = DB::table("users")
+            ->select("users.id", "users.name", "users.created_at", DB::raw("(COUNT(*)) as total"))
+            ->join('rentals', 'rentals.user_id', '=', 'users.id')
+            ->whereYear('rentals.created_at', $request->year)
+            ->groupBy('users.id', 'users.name', 'users.created_at')
+            ->get();
+
+            return $data;
+        }else if($request->category === 'kupovine'){
+            $data = DB::table("users")
+            ->select("users.id", "users.name", "users.created_at", DB::raw("(COUNT(*)) as total"))
+            ->join('orders', 'orders.user_id', '=', 'users.id')
+            ->whereYear('orders.created_at', $request->year)
+            ->groupBy('users.id', 'users.name', 'users.created_at')
+            ->get();
+
+            return $data;
+        }
+    }
 }
