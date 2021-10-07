@@ -75,7 +75,7 @@ class EBookController extends Controller
     }
 
     public function show($id){
-        $book = EBook::with('writers')
+        $book = EBook::with('writers', 'image')
             ->withCount('ratings')
             ->withSum('ratings', 'rating')
             ->where('id', '=', $id)->first();
