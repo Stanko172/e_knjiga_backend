@@ -22,17 +22,17 @@ class CouponController extends Controller
                         $coupon->save();
                         return response()->json(['coupon_price' => $coupon->price]);
                     }else{
-                        return response()->json(['message' => 'Kupon je iskorišten']);
+                        return response()->json([$coupon, 'message' => 'Kupon je iskorišten']);
                     }
                 }else{
-                    return response()->json(['message' => 'Kupon je istekao']);
+                    return response()->json([$coupon, 'message' => 'Kupon je istekao']);
                 }
             }else{
-                return response()->json(['message' => 'Trenutno nemate dozvolu za ovaj kupon']);
+                return response()->json([$coupon, 'message' => 'Trenutno nemate dozvolu za ovaj kupon']);
             }
         }
         else{
-            return response()->json(['message' => 'Traženi kupon je nepoznat']);
+            return response()->json([$coupon, 'message' => 'Traženi kupon je nepoznat']);
         }
         
         return $coupon->id;
