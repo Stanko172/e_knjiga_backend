@@ -40,6 +40,7 @@ class BookController extends Controller
         $book = new Book([
             'name' => $request->name,
             'description' => $request->description,
+            'year' => $request->year,
             'amount' => $request->amount,
             'price' => $request->price
         ]);
@@ -116,6 +117,7 @@ class BookController extends Controller
             $test_amount = true;
         }
         $book->amount = $request->amount;
+        $book->year = $request->year;
         $book->price = $request->price;
         $book->description = $request->description;
 

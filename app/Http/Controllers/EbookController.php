@@ -36,6 +36,7 @@ class EbookController extends Controller
 
         $ebook = new Ebook([
             'name' => $request->name,
+            'year' => $request->year,
             'description' => $request->description,
             'price' => $request->price
         ]);
@@ -161,6 +162,7 @@ class EbookController extends Controller
         //Ažuriranje knjige
         $book->name = $request->name;
         $book->price = $request->price;
+        $book->year = $request->year;
         $book->description = $request->description;
 
         if($book->save()){
