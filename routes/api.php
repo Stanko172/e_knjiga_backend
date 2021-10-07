@@ -113,6 +113,7 @@ Route::prefix('admin')->group(function(){
 
     //Dashboard
     Route::get("/dashboard/dashboard_info", [App\Http\Controllers\admin\DashboardController::class, 'dashboard_info']);
+    Route::get("/dashboard/chart_data", [App\Http\Controllers\admin\DashboardController::class, 'chart_data']);
 
 });
 
