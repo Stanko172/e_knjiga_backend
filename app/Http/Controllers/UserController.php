@@ -37,6 +37,11 @@ class UserController extends Controller
                 'total' => $payment->charges->data[0]->amount/100 ,
                 'payment_type' => 'book',
             ]);
+            $user->address = $request->address;
+            $user->city = $request->city;
+            $user->state = $request->state;
+            $user->postal_code = $request->postal_code;
+            $user->save();
             
             foreach(json_decode($request->input('cart'), true) as $item){
                 if($item['type'] === 'book'){
