@@ -69,6 +69,10 @@ class MembershipRequestController extends Controller
                 if($membership_request->delete()){
                     //Slanje emaila sa info o obrađenom zahtjevu
                     Mail::to($user->email)->send(new MembershipRequestInfo(['name' => $user->name, 'shop_office_name' => $shop_office_name], 'success'));
+
+                    //Dodavanje role 'user'
+                    $user->roles()->attach(2);
+                    
                     return response()->json(['message' => 'Uspješno kreirani član biblioteke i članska iskaznica.', 'request' => ['otp' => $generated_password, 'email' => $user->email]], 200);
                 }else{
                     return response()->json(['message' => 'Uspješno kreirani član biblioteke i članska iskaznica. Međutim, zahtjev za članskom iskaznicom se ne može izbrisati'], 500);
